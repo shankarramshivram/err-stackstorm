@@ -56,7 +56,7 @@ class St2(BotPlugin):
         Run an arbitrary stackstorm command.
         Available commands can be listed using !st2help
         """
-        _msg = unicode(msg)
+        _msg = str(msg)
         data = self.match(_msg)
         logging.info("st2 matched with the following %s" % data)
         if data:
@@ -147,7 +147,7 @@ class St2(BotPlugin):
                 '{}'.format(self.api_token),
                 '{}'.format(action),
         ]
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             cmd.append('{}={}'.format(k, v))
 
         sp = subprocess.Popen(cmd, shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd='/opt/stackstorm/st2/bin')
@@ -199,7 +199,7 @@ class St2(BotPlugin):
             for _format in alias_obj.formats:
                 display, representations = self._normalise_format(_format)
                 for representation in representations:
-                    if not type(representation) in [type(str()), type(unicode())]:
+                    if not type(representation) in [type(str()), type(str())]:
                         logging.info("Skipping: %s which is type %s" % (alias_obj.action_ref, type(representation)))
                         continue
                     pattern_context, kwargs = self._format_to_pattern(representation)
@@ -223,7 +223,7 @@ class St2(BotPlugin):
         """
         display = None
         representation = []
-        if type(alias_format) in [type(str()), type(unicode())]:
+        if type(alias_format) in [type(str()), type(str())]:
             display = alias_format
             representation.append(alias_format)
         if type(alias_format) == type(dict()):
